@@ -3,6 +3,7 @@ namespace Digraph\Modules\Gallery;
 
 class Gallery extends \Digraph\DSO\Noun
 {
+    const FILESTORE = true;
     const ROUTING_NOUNS = ['gallery'];
     const FILESTORE_FILE_CLASS = GalleryFile::class;
     const FILESTORE_PATH = 'filefield';

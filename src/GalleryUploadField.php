@@ -10,7 +10,7 @@ class GalleryUploadField extends \Digraph\Forms\Fields\FileStoreFieldMulti
     protected function &metaField(GalleryFile $file)
     {
         if (!$this->metaFields[$file->uniqid()]) {
-            $this->metaFields[$file->uniqid()] = new \Formward\Fields\Container('',$file->uniqid().'_meta');
+            $this->metaFields[$file->uniqid()] = new \Formward\Fields\Container('', $file->uniqid().'_meta');
             $this->metaFields[$file->uniqid()]['title'] = new \Formward\Fields\Input('Title');
             $this->metaFields[$file->uniqid()]['title']->default($file->title());
             $this->metaFields[$file->uniqid()]['caption'] = new \Formward\Fields\Textarea('Caption');
@@ -32,8 +32,10 @@ class GalleryUploadField extends \Digraph\Forms\Fields\FileStoreFieldMulti
         if ($files = $this->nounValue()) {
             $opts = [];
             foreach ($files as $file) {
-                $opts[$file->uniqid()]= $file->metaCard(false, true)
-                    .$this->metaField($file);
+                $opts[$file->uniqid()] = $file->metaCard(false, true);
+                if ($file instanceof GalleryFile) {
+                    $opts[$file->uniqid()] .= $this->metaField($file);
+                }
             }
             $this['current']->opts($opts);
         }
@@ -52,9 +54,11 @@ class GalleryUploadField extends \Digraph\Forms\Fields\FileStoreFieldMulti
         parent::hook_formWrite($noun, $map);
         if ($files = $this->nounValue()) {
             foreach ($files as $file) {
-                $field = $this->metaField($file);
-                $file->title($field['title']->value());
-                $file->caption($field['caption']->value());
+                if ($file instanceof GalleryFile) {
+                    $field = $this->metaField($file);
+                    $file->title($field['title']->value());
+                    $file->caption($field['caption']->value());
+                }
             }
             $noun->update();
         }

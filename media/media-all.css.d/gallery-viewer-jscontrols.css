@@ -1,0 +1,35 @@
+.digraph-gallery {
+    .fullscreen-toggle {
+        position:absolute;
+        top:0;
+        right:0;
+        z-index:10;
+        opacity:0.4;
+        background:$(color_accent);
+        color:#fff;
+        font-size:2em;
+        line-height:1em;
+        width:1em;
+        border-radius:0 0 0 $(border_radius_accent);
+        cursor:pointer;
+        text-align:center;
+        &:hover {
+            opacity:1;
+        }
+        &:after {
+            display:inline-block;
+            font-family:"Font Awesome 5 Free";
+            content:'\f065';
+            font-weight:900;
+            transform:scale(0.5);
+        }
+    }
+    &.zoomed {
+        .fullscreen-toggle {
+            background: $(color_error);
+            &:after {
+                content:'\f066';
+            }
+        }
+    }
+}

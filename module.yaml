@@ -1,0 +1,39 @@
+module:
+  name: digraph_gallery
+  namespace: Digraph\Modules\Gallery
+
+types:
+  content:
+    gallery: ${module.namespace}\Gallery
+
+helpers:
+  classes:
+    gallery: ${module.namespace}\GalleryHelper
+
+gallery:
+  format: webp
+  size_max: 3840
+  size_full: 2000
+  size_thumb: 200
+
+permissions:
+  url:
+    '*/gallery-file': [allow all]
+    '*/gallery-display': [allow all]
+
+image:
+  presets:
+    gallery-full:
+      size: ${gallery.size_full} ${gallery.size_full} inset
+      extension: ${gallery.format}
+    gallery-thumbnail:
+      size: ${gallery.size_thumb} ${gallery.size_thumb} cover
+      extension: ${gallery.format}
+    gallery-max:
+      size: ${gallery.size_max} ${gallery.size_max} cover
+      extension: ${gallery.format}
+
+strings:
+  urls:
+    proper:
+      '*/gallery-display': Gallery display

@@ -1,0 +1,119 @@
+.digraph-gallery-display {
+    .digraph-gallery-content {
+        position:relative;
+        background:#111;
+        padding:1em;
+        border-radius:$(border_radius_accent) $(border_radius_accent) 0 0;
+
+        >img,
+        .centered-content {
+            display:block;
+            max-width:100%;
+            max-height:80vh;
+            margin:0 auto;
+        }
+    }
+    .digraph-gallery-meta {
+        background:$(color_shade);
+        font-size:0.8em;
+        font-size:2vmin;
+        padding:$(spacing_base);
+        border-radius:0 0 $(border_radius_accent) $(border_radius_accent);
+        overflow-x:hidden;
+        overflow-y:auto;
+        h1 {
+            font-size: 1em;
+        }
+    }
+}
+.iframe-embedded .digraph-gallery-display {
+    display:flex;
+
+    .digraph-gallery-content {
+        position:fixed;
+        top:$(spacing_base);
+        left:$(spacing_base);
+        right:$(spacing_base);
+        bottom:$(spacing_base);
+        border-radius:0;
+
+        >img,
+        .centered-content {
+            position:absolute;
+            max-width:100%;
+            max-height:100%;
+            top:50%;
+            left:50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+
+    .digraph-gallery-meta {
+        background-color:#222;
+        color:#fff;
+        position:fixed;
+        top:$(spacing_base);
+        bottom:$(spacing_base);
+        left:$(spacing_base);
+        min-width:30%;
+        max-width:40em;
+        opacity:0;
+        padding:$(spacing_base);
+        border-radius:$(border_radius_accent);
+
+        .centered-content {
+            position:absolute;
+            max-height:100%;
+            top:50%;
+            transform: translateY(-50%);
+        }
+    }
+    &:hover {
+        .digraph-gallery-meta {
+            opacity:0.9;
+        }
+    }
+}
+
+/* very wide layout */
+@media (min-width:150vh) {
+    .iframe-embedded .digraph-gallery-display {
+        .digraph-gallery-content {
+            left:15%;
+            box-sizing:border-box;
+            padding-right:$(spacing_base);
+        }
+        .digraph-gallery-meta {
+            background:transparent;
+            box-sizing:border-box;
+            opacity:1;
+            left:0;
+            right:85%;
+            min-width:auto;
+            max-width:auto;
+            vertical-align:middle;
+        }
+    }
+}
+
+/* very narrow layout */
+@media (min-height:125vw) {
+    .iframe-embedded .digraph-gallery-display {
+        .digraph-gallery-content {
+            bottom:15%;
+            box-sizing:border-box;
+        }
+        .digraph-gallery-meta {
+            background:transparent;
+            box-sizing:border-box;
+            opacity:1;
+            right:0;
+            left:0;
+            bottom:0;
+            top:85%;
+            width:auto;
+            min-width:auto;
+            max-width:100%;
+        }
+    }
+}

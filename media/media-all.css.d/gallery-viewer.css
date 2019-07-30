@@ -1,0 +1,117 @@
+.digraph-gallery,
+.digraph-gallery.js-enabled,
+.digraph-gallery.js-enabled.activated {
+    @include .digraph-block;
+    position: relative;
+    background: #111;
+    overflow: hidden;
+    border-radius: $(border_radius_accent);
+
+    .digraph-gallery-items {
+        width: 150px;
+        width: 15vmin;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: flex;
+        flex-wrap:nowrap;
+        flex-direction: column;
+        max-height: 20em;
+        max-height: 80vh;
+        padding: 0.5em;
+        box-sizing: border-box;
+        background-color: $(color_shade);
+
+        .digraph-gallery-item {
+            display:block;
+            padding:5%;
+            z-index: 1;
+            width: 150px;
+            width: 15vmin;
+            transform: scale(1);
+            opacity: 0.7;
+
+            > img {
+                display: block;
+            }
+            &:hover, &:active, &:focus, &.selected {
+                padding:0;
+                z-index:2;
+                opacity:1;
+            }
+            &:hover {
+                z-index:3;
+            }
+        }
+    }
+
+    .digraph-gallery-viewer {
+        display:block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom:0;
+        left: 100px;
+        left: 15vmin;
+
+        > iframe {
+            border:0;
+            height:100%;
+            width:100%;
+            display:block;
+            background: transparent;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    }
+}
+
+.digraph-gallery.js-enabled {
+    &.activated {
+        .digraph-gallery-items {
+            min-height: 50vh;
+            .digraph-gallery-item {
+                width:auto;
+                max-width: 150px;
+                max-width: 15vmin;
+            }
+        }
+    }
+    &.zoomed {
+        position:fixed;
+        margin:0;
+        border-radius:0;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        .digraph-gallery-items {
+            position:absolute;
+            height:100%;
+            max-height:100%;
+            left:auto;
+            right:0;
+        }
+        .digraph-gallery-viewer {
+            left:0;
+            right: 100px;
+            right: 15vmin;
+        }
+    }
+    .digraph-gallery-viewer {
+        display:none;
+    }
+    .digraph-gallery-items {
+        width:100%;
+        flex-wrap:wrap;
+        flex-direction:row;
+        justify-content:space-evenly;
+        
+        .digraph-gallery-item {
+            padding:0;
+            transform:scale(0.9);
+            &:hover {
+                transform:scale(1);
+            }
+        }
+    }
+}

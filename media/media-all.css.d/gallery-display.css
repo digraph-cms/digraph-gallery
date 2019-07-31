@@ -15,8 +15,6 @@
     }
     .digraph-gallery-meta {
         background:$(color_shade);
-        font-size:0.8em;
-        font-size:2vmin;
         padding:$(spacing_base);
         border-radius:0 0 $(border_radius_accent) $(border_radius_accent);
         overflow-x:hidden;
@@ -49,69 +47,57 @@
     }
 
     .digraph-gallery-meta {
-        background-color:#222;
-        color:#fff;
-        position:fixed;
-        top:$(spacing_base);
-        bottom:$(spacing_base);
-        left:$(spacing_base);
-        min-width:30%;
-        max-width:40em;
-        opacity:0;
-        padding:$(spacing_base);
-        border-radius:$(border_radius_accent);
+        color:#ccc;
+        font-size:0.8em;
+        font-size:2vmin;
+        line-height:$(line_height_compact);
 
         .centered-content {
+            padding-right:$(spacing_base);
             position:absolute;
             max-height:100%;
             top:50%;
             transform: translateY(-50%);
         }
     }
-    &:hover {
-        .digraph-gallery-meta {
-            opacity:0.9;
-        }
+}
+
+/* wide layout */
+.iframe-embedded .digraph-gallery-display {
+    .digraph-gallery-content {
+        left:20%;
+        box-sizing:border-box;
+        padding-right:$(spacing_base);
+    }
+    .digraph-gallery-meta {
+        position:fixed;
+        background:transparent;
+        box-sizing:border-box;
+        left:0;
+        top:0;
+        bottom:0;
+        right:80%;
+        min-width:auto;
+        max-width:auto;
+        vertical-align:middle;
+        overflow-x:hidden;
+        overflow-y:auto;
     }
 }
 
-/* very wide layout */
-@media (min-width:150vh) {
+/* narrow layout */
+@media (min-height:101vw) {
     .iframe-embedded .digraph-gallery-display {
         .digraph-gallery-content {
-            left:15%;
-            box-sizing:border-box;
-            padding-right:$(spacing_base);
-        }
-        .digraph-gallery-meta {
-            background:transparent;
-            box-sizing:border-box;
-            opacity:1;
-            left:0;
-            right:85%;
-            min-width:auto;
-            max-width:auto;
-            vertical-align:middle;
-        }
-    }
-}
-
-/* very narrow layout */
-@media (min-height:125vw) {
-    .iframe-embedded .digraph-gallery-display {
-        .digraph-gallery-content {
-            bottom:15%;
+            left:$(spacing_base);
+            bottom:20%;
             box-sizing:border-box;
         }
         .digraph-gallery-meta {
-            background:transparent;
-            box-sizing:border-box;
-            opacity:1;
             right:0;
             left:0;
             bottom:0;
-            top:85%;
-            width:auto;
+            top:80%;
             min-width:auto;
             max-width:100%;
         }

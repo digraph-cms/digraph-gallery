@@ -9,20 +9,22 @@ class GalleryHelper extends \Digraph\Helpers\AbstractHelper
         'depth' => 0
     ];
 
+    //TODO: trace permissive and include-nouns down through this and make them do things
+    //TODO: sort out a way of limiting the number of items that appear
     public function gallery_tag($context, $text, $args)
     {
         $args = array_replace(static::ARGS, $args);
-        $items = $this->items($context, !!$args['nouns'], $args['depth']);
+        $items = $this->items($context, $args['depth'], isset($args['permissive']), isset($args['include-nouns']));
         return $this->galleryMarkup($items);
     }
 
-    public function gallery($noun, $includeNouns=false, $depth=0)
+    public function gallery($noun, $depth=0)
     {
-        $items = $this->items($noun, $includeNouns, $depth);
+        $items = $this->items($noun, $depth);
         return $this->galleryMarkup($items);
     }
 
-    protected function defaultItemGenerator($noun)
+    protected function defaultItemGenerator($noun, $permissive=false)
     {
         $items = [];
         $path = null;
@@ -34,7 +36,7 @@ class GalleryHelper extends \Digraph\Helpers\AbstractHelper
         if ($path) {
             $fs = $this->cms->helper('filestore');
             foreach ($fs->list($noun, $path) as $f) {
-                if ($f instanceof GalleryFile) {
+                if ($permissive || $f instanceof GalleryFile) {
                     $items[] = GalleryItem::fromFile($f);
                 }
             }
@@ -42,7 +44,7 @@ class GalleryHelper extends \Digraph\Helpers\AbstractHelper
         return $items;
     }
 
-    protected function items($noun, $includeNouns=false, $depth=0)
+    protected function items($noun, $depth=0, $permissive=false, $includeNouns=false)
     {
         $items = [];
         //get this object's items
@@ -51,23 +53,23 @@ class GalleryHelper extends \Digraph\Helpers\AbstractHelper
             $items = $items + $noun->galleryItems();
         } else {
             //include nouns if no galleryItems() method exists and it is requested
-            // if ($includeNouns) {
-            //     $items[] = $this->nounItem($noun);
-            // }
+            if ($includeNouns) {
+                $items[] = $this->nounItem($noun);
+            }
             //fall back to default item generator, which will try to make gallery items from files
-            $items = $items + $this->defaultItemGenerator($noun);
+            $items = $items + $this->defaultItemGenerator($noun, $permissive);
         }
         //recursive strategy
         if ($depth != 0) {
             $graph = $this->cms->helper('graph');
             $graph->traverse(
                 $noun['dso.id'],
-                function ($id) use (&$items,$includeNouns,$noun) {
+                function ($id) use (&$items,$permissive,$includeNouns,$noun) {
                     if ($id == $noun['dso.id']) {
                         return;
                     }
                     if ($n = $this->cms->read($id)) {
-                        foreach ($this->items($n, $includeNouns) as $i) {
+                        foreach ($this->items($n, null, $permissive, $includeNouns) as $i) {
                             $items[] = $i;
                         }
                     }

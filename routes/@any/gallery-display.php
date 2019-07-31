@@ -54,8 +54,12 @@ if ($i->supports($ext)) {
     echo "</div>";
     echo "<div class='digraph-gallery-meta'>";
     echo "<div class='centered-content'>";
-    echo "<h1>".$f->titleSanitized()."</h1>";
-    echo "<div>".$f->captionSanitized()."</div>";
+    if ($f instanceof \Digraph\Modules\Gallery\GalleryFile) {
+        echo "<h1>".$f->titleSanitized()."</h1>";
+        echo "<div>".$f->captionSanitized()."</div>";
+    }else {
+        echo "<h1>".$f->name()."</h1>";
+    }
     echo "</div>";
     echo "</div>";
     echo "</div>";

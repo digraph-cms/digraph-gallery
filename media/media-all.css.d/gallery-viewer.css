@@ -12,11 +12,7 @@
         width: 15vmin;
         overflow-x: hidden;
         overflow-y: auto;
-        display: flex;
-        flex-wrap:nowrap;
-        flex-direction: column;
-        max-height: 20em;
-        max-height: 80vh;
+        display: block;
         padding: 0.5em;
         box-sizing: border-box;
         background-color: $(color_shade);
@@ -61,14 +57,22 @@
             background: transparent;
             overflow-x: hidden;
             overflow-y: auto;
+            z-index:1;
         }
     }
 }
 
 .digraph-gallery.js-enabled {
+    .digraph-gallery-items {
+        display:flex;
+        flex-direction:row;
+        flex-wrap:wrap;
+    }
     &.activated {
         .digraph-gallery-items {
-            min-height: 50vh;
+            min-height: 40vh;
+            max-height: 20em;
+            max-height: 60vh;
             .digraph-gallery-item {
                 width:auto;
                 max-width: 150px;
